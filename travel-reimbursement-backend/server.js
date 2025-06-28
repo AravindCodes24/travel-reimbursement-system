@@ -30,6 +30,13 @@ app.use("/api/users", hrRoutes); // HR user approval
 //  payout processing
 app.use("/api/payouts", payoutRoutes);
 
+
+// Root route for sanity check
+app.get("/", (req, res) => {
+  res.send("API is running 🚀");
+});
+
+
 // Global error handler
 app.use((err, req, res, next) => {
   console.error("Global error handler:", err);
