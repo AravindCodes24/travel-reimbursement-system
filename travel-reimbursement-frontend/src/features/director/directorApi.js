@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = process.env.REACT_APP_API_BASE_URL + "/api";
 
 export const fetchDirectorClaimsApi = async () => {
   const response = await axios.get(`${BASE_URL}/claims`);
   const claims = response.data;
-  
+
   // Calculate stats
   const stats = claims.reduce(
     (acc, claim) => {
