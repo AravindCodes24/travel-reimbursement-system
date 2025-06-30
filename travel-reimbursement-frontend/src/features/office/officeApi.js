@@ -38,13 +38,33 @@ export const updatePaymentStatusApi = async (claimId, payload) => {
   return res.data;
 };
 
-// Initiate Cashfree payout
+// // Initiate Cashfree payout
+// export const initiateCashfreePayout = async (payload) => {
+//   try {
+//     const response = await axios.post(`${BASE_URL}/payouts/cashfree`, payload, {
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error("Cashfree payout error:", {
+//       message: error.message,
+//       response: error.response?.data,
+//       status: error.response?.status,
+//     });
+//     throw error;
+//   }
+// };
+
+
 export const initiateCashfreePayout = async (payload) => {
   try {
-    const response = await axios.post(`${BASE_URL}/payouts/cashfree`, payload, {
+    const response = await axios.post("/api/payouts/cashfree", payload, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     return response.data;
@@ -57,3 +77,4 @@ export const initiateCashfreePayout = async (payload) => {
     throw error;
   }
 };
+
