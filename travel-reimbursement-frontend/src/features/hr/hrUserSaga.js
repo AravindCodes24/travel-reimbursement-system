@@ -12,12 +12,14 @@ import {
   rejectUserFailure,
 } from "../hr/hrUserSlice";
 
+const BASE_URL = process.env.REACT_APP_API_BASE_URL + "/api";
+
 function* fetchPendingUsers() {
   try {
     const token = localStorage.getItem("token");
     const response = yield call(
       axios.get,
-      "http://localhost:3000/api/users/pending",
+      `${BASE_URL}/users/pending`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -33,7 +35,7 @@ function* approveUser(action) {
     const token = localStorage.getItem("token");
     yield call(
       axios.patch,
-      `http://localhost:3000/api/users/approve/${action.payload}`,
+      `${BASE_URL}/users/approve/${action.payload}`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -44,12 +46,13 @@ function* approveUser(action) {
     yield put(approveUserFailure(error.message));
   }
 }
+
 function* rejectUser(action) {
   try {
     const token = localStorage.getItem("token");
     yield call(
       axios.patch,
-      `http://localhost:3000/api/users/reject/${action.payload}`,
+      `${BASE_URL}/users/reject/${action.payload}`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },
