@@ -12,12 +12,15 @@ import {
   submitClaimFailure
 } from '../Employee/employeeClaimSlice';
 
+// ✅ Use environment-based API URL
+const BASE_URL = process.env.REACT_APP_API_BASE_URL + '/api';
+
 function* fetchClaims() {
   try {
     const token = localStorage.getItem('token');
     const response = yield call(
       axios.get,
-      'http://localhost:5000/api/employee/claims',
+      `${BASE_URL}/employee/claims`,
       {
         headers: { Authorization: `Bearer ${token}` }
       }
@@ -34,7 +37,7 @@ function* requestReimbursement(action) {
     const token = localStorage.getItem('token');
     const response = yield call(
       axios.patch,
-      `http://localhost:5000/api/claims/${claimId}/request-reimbursement`,
+      `${BASE_URL}/claims/${claimId}/request-reimbursement`,
       paymentDetails,
       {
         headers: { Authorization: `Bearer ${token}` }
@@ -50,12 +53,12 @@ function* submitClaim(action) {
   try {
     const { employeeInfo, travelDetails, expenses } = action.payload;
     const token = localStorage.getItem('token');
-    
+
     const formData = new FormData();
     formData.append('employeeInfo', JSON.stringify(employeeInfo));
     formData.append('travelDetails', JSON.stringify(travelDetails));
     formData.append('expenses', JSON.stringify(expenses));
-    
+
     expenses.forEach((expense) => {
       if (expense.receiptFile) {
         formData.append('receipts', expense.receiptFile);
@@ -64,16 +67,16 @@ function* submitClaim(action) {
 
     yield call(
       axios.post,
-      'http://localhost:5000/api/claim',
+      `${BASE_URL}/claim`,
       formData,
       {
-        headers: { 
+        headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
         }
       }
     );
-    
+
     yield put(submitClaimSuccess());
   } catch (error) {
     yield put(submitClaimFailure(error.message));
