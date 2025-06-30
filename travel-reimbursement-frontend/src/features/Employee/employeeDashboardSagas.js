@@ -12,6 +12,8 @@ import {
   downloadPdfFailure,
 } from './employeeDashboardSlice';
 
+const BASE_URL = process.env.REACT_APP_API_BASE_URL + "/api";
+
 // Helper function to get token from your existing auth state
 const getToken = (state) => state.auth.user?.token;
 
@@ -26,7 +28,7 @@ function* fetchClaims() {
 
     const response = yield call(
       axios.get,
-      'http://localhost:5000/api/employee/claims',
+      `${BASE_URL}/employee/claims`,
       {
         headers: { Authorization: `Bearer ${token}` }
       }
@@ -49,7 +51,7 @@ function* requestReimbursement(action) {
     const { claimId, paymentDetails } = action.payload;
     const response = yield call(
       axios.patch,
-      `http://localhost:5000/api/claims/${claimId}/request-reimbursement`,
+      `${BASE_URL}/claims/${claimId}/request-reimbursement`,
       paymentDetails,
       {
         headers: { Authorization: `Bearer ${token}` }
@@ -73,7 +75,7 @@ function* downloadPdf(action) {
     const { claimId } = action.payload;
     const response = yield call(
       axios.get,
-      `http://localhost:5000/api/claims/${claimId}/pdf`,
+      `${BASE_URL}/claims/${claimId}/pdf`,
       {
         responseType: 'blob',
         headers: { Authorization: `Bearer ${token}` }
@@ -93,6 +95,7 @@ function* downloadPdf(action) {
     yield put(downloadPdfFailure(error.message));
   }
 }
+
 export function* employeeDashboardSaga() {
   yield takeLatest(fetchClaimsStart.type, fetchClaims);
   yield takeLatest(requestReimbursementStart.type, requestReimbursement);
