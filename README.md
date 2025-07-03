@@ -9,7 +9,10 @@ A full-stack application for employees to submit travel claims and for HR/Direct
 - **Frontend:** React.js, Redux Toolkit, Redux Saga, Material UI
 - **Backend:** Node.js, Express.js, MongoDB
 - **State Management:** Redux Toolkit
-- **Side Effects:** Redux Saga
+- **Side Effects:** Redux
+- **UI Framework:** Material UI
+- **Animations:** GSAP (Login only)
+
 
 ---
 
