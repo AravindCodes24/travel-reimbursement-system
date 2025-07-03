@@ -34,9 +34,9 @@ app.use("/api/users", hrRoutes); // HR user approval
 app.use("/api/payouts", payoutRoutes);
 
 
-// Root route for sanity check
+// Root route for connection check -  Render backend check 
 app.get("/", (req, res) => {
-  res.send("API is running 🚀");
+  res.send("API is running ");
 });
 
 
